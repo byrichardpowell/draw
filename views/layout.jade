@@ -1,0 +1,14 @@
+doctype 5
+html
+	head
+
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+
+		script(src='/socket.io/socket.io.js')
+		script(src='/javascripts/socket.js')
+
+		script(src='/javascripts/lib/paper.js')
+		script(src='/javascripts/canvas.js', type="text/paperscript", canvas="myCanvas")
+
+	body!= body
