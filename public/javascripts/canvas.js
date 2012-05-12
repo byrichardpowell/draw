@@ -92,8 +92,6 @@ function draw_external_path( points ) {
     path.closed = true;
     path.smooth();
 
-    canvas.click
-
 
 
 }
