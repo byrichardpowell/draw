@@ -1,7 +1,7 @@
 tool.minDistance = 10;
 tool.maxDistance = 45;
 
-var socket = io.connect('http://localhost');
+var socket = io.connect('/');
 var canvas = document.getElementById('myCanvas');
 
 var path;
