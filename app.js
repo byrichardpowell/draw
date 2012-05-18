@@ -58,10 +58,16 @@ app.listen(3000, function(){
 
 
 // SOCKET IO
+var active_connections = 0;
 io.sockets.on('connection', function (socket) {
 
+  active_connections++
+
+  io.sockets.emit('user:connect', active_connections);
+
   socket.on('disconnect', function () {
-    io.sockets.emit('user disconnected');
+    active_connections--
+    io.sockets.emit('user:disconnect', active_connections);
   });
 
   // EVENT: User stops drawing something

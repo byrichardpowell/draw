@@ -1,5 +1,8 @@
 
 div(id="controls")
+	div(id="userCountWrapper", style="opacity:0") artists:
+		span(id="userCount")
+
 	div(data-color="47,47,47", class="color", style="background:rgb(37,37,37);")
 	div(data-color="109,73,37", class="color active", style="background:rgb(109,73,37);")
 	div(data-color="233,34,41", class="color", style="background:rgb(233,34,41);")
@@ -10,7 +13,7 @@ div(id="controls")
 	div(data-color="77,42,255", class="color", style="background:rgb(77,42,255);")
 	div(data-color="255,255,255", class="color", style="background:rgb(255,255,255);")
 	label Opacity
-		input(type="range", min="0", max="255", value="200", id="opacity")
+		input(type="range", min="0", max="255", value="240", id="opacity")
 
 canvas(id="myCanvas", resize="true")
 
