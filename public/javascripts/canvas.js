@@ -72,7 +72,7 @@ var $user_count_wrapper = $('#userCountWrapper');
 function update_user_count( count ) {
 
     $user_count_wrapper.css('opacity', 1);
-    $user_count.text(' ' + count);
+    $user_count.text( (count === 1) ? " just you, why not invite some friends?" : " " + count );
 
 }
 
