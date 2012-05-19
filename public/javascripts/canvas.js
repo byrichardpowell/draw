@@ -5,8 +5,15 @@ tool.maxDistance = 45;
 // Initialise Socket.io
 var socket = io.connect('/');
 
-// User stuff
-var uid = (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+// Random Id's
+var uid =  (function() {
+     var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+} () )
+
+console.log(uid);
 
 // JSON data ofthe users current drawing
 // Is sent to the user
@@ -37,6 +44,8 @@ var update_active_color = function() {
 }
 
 
+
+
 // Takes data recieved from other users and draws it
 function draw_external_path( points ) {
 
@@ -64,6 +73,9 @@ function draw_external_path( points ) {
     path.smooth();
 
 }
+
+
+
 
 
 // Updates the active connections
