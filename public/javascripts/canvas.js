@@ -5,7 +5,8 @@ tool.maxDistance = 45;
 // Initialise Socket.io
 var socket = io.connect('/');
 
-// Random Id's
+// Random User ID
+// Used when sending data
 var uid =  (function() {
      var S4 = function() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -13,11 +14,11 @@ var uid =  (function() {
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 } () )
 
-console.log(uid);
+
 
 // JSON data ofthe users current drawing
 // Is sent to the user
-var path_to_send;
+var path_to_send = {};
 
 // Calculates colors
 var active_color_rgb;
@@ -46,50 +47,6 @@ var update_active_color = function() {
 
 
 
-// Takes data recieved from other users and draws it
-function draw_external_path( points ) {
-
-    // Start the path
-    var path = new Path();
-    var start_point = new Point(points.start.x, points.start.y);
-    var color = new RgbColor( points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity );
-    path.fillColor = color;
-    path.add(start_point);
-
-    // Draw all the points along the length of the path
-    var paths = points.path
-    var length = paths.length
-    for (var i = 0; i < length; i++ ) {
-
-        path.add(paths[i].top);
-        path.insert(0, paths[i].bottom);
-        path.smooth();
-
-    }
-
-    // Close the path
-    path.add(points.end);
-    path.closed = true;
-    path.smooth();
-
-}
-
-
-
-
-
-// Updates the active connections
-var $user_count = $('#userCount');
-var $user_count_wrapper = $('#userCountWrapper');
-function update_user_count( count ) {
-
-    $user_count_wrapper.css('opacity', 1);
-    $user_count.text( (count === 1) ? " just you, why not invite some friends?" : " " + count );
-
-}
-
-
-
 // Get the active color from the UI eleements
 update_active_color();
 
@@ -103,6 +60,9 @@ update_active_color();
 // DRAWING EVENTS
 
 
+var send_paths_timer;
+var timer_is_active = false;
+
 function onMouseDown(event) {
 
     var point = event.point;
@@ -111,6 +71,7 @@ function onMouseDown(event) {
     path.fillColor = active_color_rgb
     path.add(event.point);
 
+    // The data we will send every 100ms on mouse drag
     path_to_send = {
         rgba : active_color_json,
         start : event.point,
@@ -132,22 +93,47 @@ function onMouseDrag(event) {
     path.insert(0, bottom);
     path.smooth();
 
+    // Add data to path
     path_to_send.path.push({
         top : top,
         bottom : bottom,
     })
 
+    // Send paths every 100ms
+    if ( !timer_is_active ) {
+
+        send_paths_timer = setInterval( function() {
+
+            console.log('progress')
+
+            socket.emit('draw:progress', uid, JSON.stringify(path_to_send) );
+
+            path_to_send.path = new Array();
+
+        }, 100);
+
+    }
+
+    timer_is_active = true;
+
 }
+
 
 function onMouseUp(event) {
    
+    // Close the users path
     path.add(event.point);
     path.closed = true;
     path.smooth();
 
+    // Send the path to other users
     path_to_send.end = event.point;
-
     socket.emit('draw:end', uid, JSON.stringify(path_to_send) );
+
+    // Stop new path data being added & sent
+    clearInterval(send_paths_timer);
+    path_to_send.path = new Array();
+    timer_is_active = false;
 
 }
 
@@ -185,15 +171,32 @@ $opacity.on('change', function() {
 
 
 
+
+
+
 // --------------------------------- 
 // SOCKET.IO EVENTS
+
+
+socket.on('draw:progress', function( artist, data ) {
+
+    // It wasnt this user who created the event
+    if ( artist !== uid && data ) {
+
+       progress_external_path( JSON.parse( data ), artist );
+
+    }
+
+}) 
+
+
 
 socket.on('draw:end', function( artist, data ) {
 
     // It wasnt this user who created the event
     if ( artist !== uid && data ) {
 
-        draw_external_path( JSON.parse( data ) );
+       end_external_path( JSON.parse( data ), artist );
 
     }
 
@@ -210,5 +213,82 @@ socket.on('user:disconnect', function(user_count) {
     update_user_count( user_count )
 
 }) 
+
+
+
+
+
+
+// --------------------------------- 
+// SOCKET.IO EVENT FUNCTIONS
+
+
+// Updates the active connections
+var $user_count = $('#userCount');
+var $user_count_wrapper = $('#userCountWrapper');
+function update_user_count( count ) {
+
+    $user_count_wrapper.css('opacity', 1);
+    $user_count.text( (count === 1) ? " just you, why not invite some friends?" : " " + count );
+
+}
+
+
+var external_paths = {};
+
+// Ends a path
+var end_external_path = function( points, artist ) {
+
+    var path = external_paths[artist];
+
+    if ( path ) {
+
+        // Close the path
+        path.add(points.end);
+        path.closed = true;
+        path.smooth();
+
+        // Remove the old data
+        external_paths[artist] = false;
+
+    }
+
+}
+
+// Continues to draw a path in real time
+progress_external_path = function( points, artist ) {
+
+
+    var path = external_paths[artist];
+
+    // The path hasnt already been started
+    // So start it
+    if ( !path ) {
+
+        // Creates the path in an easy to access way
+        external_paths[artist] = new Path();
+        path = external_paths[artist];
+
+        // Starts the path
+        var start_point = new Point(points.start.x, points.start.y);
+        var color = new RgbColor( points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity );
+        path.fillColor = color;
+        path.add(start_point);
+
+    }
+
+    // Draw all the points along the length of the path
+    var paths = points.path
+    var length = paths.length
+    for (var i = 0; i < length; i++ ) {
+
+        path.add(paths[i].top);
+        path.insert(0, paths[i].bottom);
+
+    }
+
+    path.smooth();
+
+}
 
 
