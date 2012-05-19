@@ -43,17 +43,15 @@ app.get('/', function(req, res){
     title: 'Home'
   });
 });
-app.get('/news', function(req, res){
-  res.render('news', {
-    title: 'News'
-  });
-});
 
 
 // LISTEN FOR REQUESTS
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
+
+
+
 
 
 

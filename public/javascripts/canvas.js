@@ -12,7 +12,7 @@ var uid =  (function() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-} () )
+} () );
 
 
 
@@ -33,16 +33,16 @@ var update_active_color = function() {
     var opacity =  $opacity.val() / 255;
 
     active_color_rgb =  new RgbColor( red, green, blue, opacity );
-    active_color_rgb._alpha = opacity
+    active_color_rgb._alpha = opacity;
 
     active_color_json = {
         "red" : red,
         "green" : green,
         "blue" : blue,
         "opacity" : opacity
-    }
+    };
 
-}
+};
 
 
 
@@ -68,7 +68,7 @@ function onMouseDown(event) {
     var point = event.point;
 
     path = new Path();
-    path.fillColor = active_color_rgb
+    path.fillColor = active_color_rgb;
     path.add(event.point);
 
     // The data we will send every 100ms on mouse drag
@@ -76,7 +76,7 @@ function onMouseDown(event) {
         rgba : active_color_json,
         start : event.point,
         path : []
-    }
+    };
 
 
 }
@@ -96,18 +96,15 @@ function onMouseDrag(event) {
     // Add data to path
     path_to_send.path.push({
         top : top,
-        bottom : bottom,
-    })
+        bottom : bottom
+    });
 
     // Send paths every 100ms
     if ( !timer_is_active ) {
 
         send_paths_timer = setInterval( function() {
 
-            console.log('progress')
-
             socket.emit('draw:progress', uid, JSON.stringify(path_to_send) );
-
             path_to_send.path = new Array();
 
         }, 100);
@@ -152,18 +149,18 @@ function onMouseUp(event) {
 var $color = $('.color');
 $color.on('click', function() {
 
-    $color.removeClass('active')
+    $color.removeClass('active');
     $(this).addClass('active');
 
-    update_active_color()
+    update_active_color();
 
-})
+});
 
 $opacity.on('change', function() {
 
     update_active_color();
 
-})
+});
 
 
 
@@ -188,7 +185,7 @@ socket.on('draw:progress', function( artist, data ) {
 
     }
 
-}) 
+}); 
 
 socket.on('draw:end', function( artist, data ) {
 
@@ -197,15 +194,15 @@ socket.on('draw:end', function( artist, data ) {
        end_external_path( JSON.parse( data ), artist );
     }
 
-}) 
+}); 
 
 socket.on('user:connect', function(user_count) {
-    update_user_count( user_count )
-}) 
+    update_user_count( user_count );
+});
 
 socket.on('user:disconnect', function(user_count) {
-    update_user_count( user_count )
-}) 
+    update_user_count( user_count );
+});
 
 
 
@@ -246,7 +243,7 @@ var end_external_path = function( points, artist ) {
 
     }
 
-}
+};
 
 // Continues to draw a path in real time
 progress_external_path = function( points, artist ) {
@@ -271,8 +268,8 @@ progress_external_path = function( points, artist ) {
     }
 
     // Draw all the points along the length of the path
-    var paths = points.path
-    var length = paths.length
+    var paths = points.path;
+    var length = paths.length;
     for (var i = 0; i < length; i++ ) {
 
         path.add(paths[i].top);
@@ -282,6 +279,6 @@ progress_external_path = function( points, artist ) {
 
     path.smooth();
 
-}
+};
 
 
