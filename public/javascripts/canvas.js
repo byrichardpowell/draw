@@ -174,6 +174,7 @@ $opacity.on('change', function() {
 
 
 
+
 // --------------------------------- 
 // SOCKET.IO EVENTS
 
@@ -189,29 +190,21 @@ socket.on('draw:progress', function( artist, data ) {
 
 }) 
 
-
-
 socket.on('draw:end', function( artist, data ) {
 
     // It wasnt this user who created the event
     if ( artist !== uid && data ) {
-
        end_external_path( JSON.parse( data ), artist );
-
     }
 
 }) 
 
 socket.on('user:connect', function(user_count) {
-
     update_user_count( user_count )
-
 }) 
 
 socket.on('user:disconnect', function(user_count) {
-
     update_user_count( user_count )
-
 }) 
 
 

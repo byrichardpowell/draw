@@ -77,8 +77,6 @@ io.sockets.on('connection', function (socket) {
 
   });
 
-
-
   // EVENT: User stops drawing something
   socket.on('draw:end', function (uid, co_ordinates) {
     
