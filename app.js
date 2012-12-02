@@ -7,7 +7,7 @@ var express = require('express'),
   app = module.exports = express(),
   http = require('http'),
   server = http.createServer(app),
-  io = require('socket.io').listen(app);
+  io = require('socket.io').listen(server);
 
 /**
  * A setting.
