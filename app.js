@@ -3,36 +3,37 @@
  */
 
 var express = require('express'),
-  routes = require('./routes'),
-  app = module.exports = express(),
+  app = express(),
   http = require('http'),
   server = http.createServer(app),
   io = require('socket.io').listen(server);
 
 /**
- * A setting.
+ * A setting, just one
  */
 
 var port = 3000;
 
 
 
-// CONFIG
-app.configure(function(){
 
-  // DEFAULT
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-  
-  // SESSIONS
-  app.use(express.cookieParser());
-  app.use(express.session({secret: 'secret', key: 'express.sid'}));
 
-});
+/** Below be dragons 
+ *
+ */
+
+var pub = __dirname + '/public';
+app.use(app.router);
+app.use(express.static(pub));
+app.use(express.errorHandler());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.set('view options', {layout: false});
+
+// SESSIONS
+app.use(express.cookieParser());
+app.use(express.session({secret: 'secret', key: 'express.sid'}));
+
 
 // DEV MODE
 app.configure('development', function(){
@@ -47,7 +48,8 @@ app.configure('production', function(){
 // ROUTES
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Home'
+    title: 'title',
+    layout: 'layout.jade'
   });
 });
 
