@@ -1,12 +1,21 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-var routes = require('./routes');
-var app = module.exports = express.createServer();
-var io = require('socket.io').listen(app);
+var express = require('express'),
+  routes = require('./routes'),
+  app = module.exports = express(),
+  http = require('http'),
+  server = http.createServer(app),
+  io = require('socket.io').listen(app);
+
+/**
+ * A setting.
+ */
+
+var port = 3000;
+
+
 
 // CONFIG
 app.configure(function(){
@@ -35,8 +44,6 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-
-
 // ROUTES
 app.get('/', function(req, res){
   res.render('index', {
@@ -44,10 +51,9 @@ app.get('/', function(req, res){
   });
 });
 
-
 // LISTEN FOR REQUESTS
-app.listen(3000, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+app.listen(port, function(){
+  console.log("Express server listening on port %d in %s mode", port, app.settings.env);
 });
 
 
