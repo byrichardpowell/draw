@@ -48,8 +48,7 @@ app.configure('production', function(){
 // ROUTES
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'title',
-    layout: 'layout.jade'
+    title: 'title'
   });
 });
 
