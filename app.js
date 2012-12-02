@@ -2,11 +2,21 @@
  * Module dependencies.
  */
 
+/*
 var express = require('express'),
   app = express(),
   http = require('http'),
   server = http.createServer(app),
-  io = require('socket.io').listen(server);
+  socket = require('socket.io'),
+  io = socket.listen(server);
+*/
+
+var express = require('express');
+var app = express.createServer();
+var socket = require('socket.io');
+app.configure(function(){
+  app.use(express.static(__dirname + '/'));
+});
 
 /**
  * A setting, just one
@@ -25,15 +35,18 @@ var port = 3000;
 var pub = __dirname + '/public';
 app.use(app.router);
 app.use(express.static(pub));
-app.use(express.errorHandler());
+// app.use(express.errorHandler());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
 
+app.configure(function(){
+  app.use(express.static(__dirname + '/'));
+});
+
 // SESSIONS
 app.use(express.cookieParser());
 app.use(express.session({secret: 'secret', key: 'express.sid'}));
-
 
 // DEV MODE
 app.configure('development', function(){
@@ -53,14 +66,8 @@ app.get('/', function(req, res){
 });
 
 // LISTEN FOR REQUESTS
-app.listen(port, function(){
-  console.log("Express server listening on port %d in %s mode", port, app.settings.env);
-});
-
-
-
-
-
+var server = app.listen(port);
+var io = socket.listen(server);
 
 // SOCKET IO
 var active_connections = 0;
