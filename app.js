@@ -1,29 +1,52 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-var routes = require('./routes');
-var app = module.exports = express.createServer();
-var io = require('socket.io').listen(app);
+/*
+var express = require('express'),
+  app = express(),
+  http = require('http'),
+  server = http.createServer(app),
+  socket = require('socket.io'),
+  io = socket.listen(server);
+*/
 
-// CONFIG
+var express = require('express');
+var app = express.createServer();
+var socket = require('socket.io');
 app.configure(function(){
-
-  // DEFAULT
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-  
-  // SESSIONS
-  app.use(express.cookieParser());
-  app.use(express.session({secret: 'secret', key: 'express.sid'}));
-
+  app.use(express.static(__dirname + '/'));
 });
+
+/**
+ * A setting, just one
+ */
+
+var port = 3000;
+
+
+
+
+
+/** Below be dragons 
+ *
+ */
+
+var pub = __dirname + '/public';
+app.use(app.router);
+app.use(express.static(pub));
+// app.use(express.errorHandler());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.set('view options', {layout: false});
+
+app.configure(function(){
+  app.use(express.static(__dirname + '/'));
+});
+
+// SESSIONS
+app.use(express.cookieParser());
+app.use(express.session({secret: 'secret', key: 'express.sid'}));
 
 // DEV MODE
 app.configure('development', function(){
@@ -35,25 +58,16 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-
-
 // ROUTES
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Home'
+    title: 'title'
   });
 });
 
-
 // LISTEN FOR REQUESTS
-app.listen(3000, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
-
-
-
-
-
+var server = app.listen(port);
+var io = socket.listen(server);
 
 // SOCKET IO
 var active_connections = 0;
