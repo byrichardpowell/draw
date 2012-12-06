@@ -1,0 +1,32 @@
+<html>
+        <script> 
+      
+            function go2Name() 
+            {
+                var padname = document.getElementById("padname").value;
+                padname.length > 0 ? window.location = "p/" + padname : alert("Please enter a name")
+            }
+ 
+            function go2Random() 
+            {
+                window.location = "p/" + randomPadName();
+            }
+ 
+            function randomPadName() 
+            {
+                var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+                var string_length = 10;
+                var randomstring = '';
+                for (var i = 0; i < string_length; i++) 
+                {
+                    var rnum = Math.floor(Math.random() * chars.length);
+                    randomstring += chars.substring(rnum, rnum + 1);
+                }
+                return randomstring;
+            }
+            
+            // start the custom js
+            if (typeof customStart == "function") customStart();
+        go2Name();
+        </script>
+</html>
