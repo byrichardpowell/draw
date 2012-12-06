@@ -10,8 +10,9 @@
     </head>
     <body>
     <div id="controls">
-        <div id="userCountWrapper" style="opacity:0"> artists:</div>
-        <span id="userCount"></span>
+        <div id="userCountWrapper" style="opacity:0"> artists:
+            <span id="userCount"></span>
+        </div>
         <div data-color="47,47,47" class="color" style="background:rgb(37,37,37);"></div>
         <div data-color="109,73,37" class="color active" style="background:rgb(109,73,37);"></div>
         <div data-color="233,34,41" class="color" style="background:rgb(233,34,41);"></div>
@@ -21,10 +22,10 @@
         <div data-color="142,42,140" class="color" style="background:rgb(142,42,140);"></div>
         <div data-color="77,42,255" class="color" style="background:rgb(77,42,255);"></div>
         <div data-color="255,255,255" class="color" style="background:rgb(255,255,255);"></div>
-<!--
-        <label Opacity>
--->
-        <input type="range" min="0" max="255" value="200" id="opacity">
+        <label>Opacity
+           <input type="range" min="0" max="255" value="200" id="opacity">
+        </label>
     </div>
-<canvas id="myCanvas" resize="true"></canvas>
-
+    <canvas id="myCanvas" resize="true"></canvas>
+    </body>
+</html>
