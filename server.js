@@ -2,17 +2,9 @@
  * Module dependencies.
  */
 
-/*
-var express = require('express'),
-  app = express(),
-  http = require('http'),
-  server = http.createServer(app),
-  socket = require('socket.io'),
-  io = socket.listen(server);
-*/
+var express = require("express");
+var app = express();
 
-var express = require('express');
-var app = express.createServer();
 var socket = require('socket.io');
 app.configure(function(){
   app.use(express.static(__dirname + '/'));
