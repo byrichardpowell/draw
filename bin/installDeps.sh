@@ -68,24 +68,24 @@ echo "Ensure that all dependencies are up to date..."
   npm install --loglevel warn
 )
 
-echo "Ensure jQuery is downloaded and up to date..."
-DOWNLOAD_JQUERY="true"
-NEEDED_VERSION="1.7.1"
-if [ -f "src/static/js/jquery.js" ]; then
-  if [ $(uname) = "SunOS" ]; then
-    VERSION=$(cat src/static/js/jquery.js | head -n 3 | ggrep -o "v[0-9]\.[0-9]\(\.[0-9]\)\?");
-  else
-    VERSION=$(cat src/static/js/jquery.js | head -n 3 | grep -o "v[0-9]\.[0-9]\(\.[0-9]\)\?");
-  fi
-
-  if [ ${VERSION#v} = $NEEDED_VERSION ]; then
-    DOWNLOAD_JQUERY="false"
-  fi
-fi
-
-if [ $DOWNLOAD_JQUERY = "true" ]; then
-  curl -lo src/static/js/jquery.js http://code.jquery.com/jquery-$NEEDED_VERSION.js || exit 1
-fi
+#echo "Ensure jQuery is downloaded and up to date..."
+#DOWNLOAD_JQUERY="true"
+#NEEDED_VERSION="1.7.1"
+#if [ -f "src/static/js/jquery.js" ]; then
+#  if [ $(uname) = "SunOS" ]; then
+#    VERSION=$(cat src/static/js/jquery.js | head -n 3 | ggrep -o "v[0-9]\.[0-9]\(\.[0-9]\)\?");
+#  else
+#    VERSION=$(cat src/static/js/jquery.js | head -n 3 | grep -o "v[0-9]\.[0-9]\(\.[0-9]\)\?");
+#  fi
+#
+#  if [ ${VERSION#v} = $NEEDED_VERSION ]; then
+#    DOWNLOAD_JQUERY="false"
+#  fi
+#fi
+#
+#if [ $DOWNLOAD_JQUERY = "true" ]; then
+#  curl -lo src/static/js/jquery.js http://code.jquery.com/jquery-$NEEDED_VERSION.js || exit 1
+#fi
 
 exit 0
 
