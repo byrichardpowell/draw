@@ -279,6 +279,11 @@ progress_external_path = function( points, artist ) {
 
     path.smooth();
 
+
+    view.draw();
+
+
+
 };
 
 
