@@ -1,8 +1,7 @@
 EtherDraw
 =========
 
-A collaborative drawing tool
-
+A collaborative drawing tool [for the rest of us](http://www.byrichardpowell.co.uk/post/23958785278/fun-with-nodejs-socketio-paperjs#ux)
 
 Requirements
 ------------
