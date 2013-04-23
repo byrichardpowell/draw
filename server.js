@@ -14,7 +14,7 @@ app.configure(function(){
  * A setting, just one
  */
 
-var port = 9002;
+var port = 3000;
 
 
 
