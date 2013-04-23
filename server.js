@@ -76,7 +76,7 @@ io.sockets.on('connection', function (socket) {
   });
   
   // User joins a room
-  socket.on('subscribe', function(data){
+  socket.on('subscribe', function(data) {
     subscribe(socket, data);
   });
   
@@ -112,7 +112,7 @@ function disconnect(socket) {
 }
 
 // Unsubscribe a client from a room
-function unsubscribe(socket, data){
+function unsubscribe(socket, data) {
   var room = data.room;
   
   // Remove the client from socket.io room
