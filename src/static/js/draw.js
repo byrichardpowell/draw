@@ -14,17 +14,10 @@ var uid = (function () {
   return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }());
 
-
-
-
-// emit to join the room
+// Join the room
 var room = window.location.pathname.split("/")[2];
 console.log(room);
 socket.emit('subscribe', { room: room });
-
-
-
-
 
 // JSON data ofthe users current drawing
 // Is sent to the user
