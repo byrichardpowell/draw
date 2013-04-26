@@ -237,7 +237,7 @@ var end_external_path = function (points, artist) {
   if (path) {
 
     // Close the path
-	path.add(new Point(points.end[1], points.end[2]));
+    path.add(new Point(points.end[1], points.end[2]));
     path.closed = true;
     path.smooth();
     view.draw();
@@ -263,7 +263,7 @@ progress_external_path = function (points, artist) {
     path = external_paths[artist];
 
     // Starts the path
-	var start_point = new Point(points.start[1], points.start[2]);
+    var start_point = new Point(points.start[1], points.start[2]);
     var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
     path.fillColor = color;
     path.add(start_point);
@@ -275,8 +275,8 @@ progress_external_path = function (points, artist) {
   var length = paths.length;
   for (var i = 0; i < length; i++) {
 
-	path.add(new Point(paths[i].top[1], paths[i].top[2]));
-	path.insert(0, new Point(paths[i].bottom[1], paths[i].bottom[2]));
+    path.add(new Point(paths[i].top[1], paths[i].top[2]));
+    path.insert(0, new Point(paths[i].bottom[1], paths[i].bottom[2]));
 
   }
 
