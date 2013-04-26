@@ -263,7 +263,6 @@ progress_external_path = function (points, artist) {
     path = external_paths[artist];
 
     // Starts the path
-    //var start_point = new Point(points.start.x, points.start.y);
 	var start_point = new Point(points.start[1], points.start[2]);
     var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
     path.fillColor = color;

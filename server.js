@@ -121,7 +121,7 @@ function unsubscribe(socket, data) {
   socket.leave(room);
 	
   // Broadcast to room the new user count
-  if ( io.sockets.manager.rooms['/' + room] ) {
+  if (io.sockets.manager.rooms['/' + room]) {
     var active_connections = io.sockets.manager.rooms['/' + room].length;  
     io.sockets.in(room).emit('user:disconnect', active_connections);
   }
