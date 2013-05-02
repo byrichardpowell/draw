@@ -118,12 +118,10 @@ function loadFromDB(room, socket) {
   db.init(function (err) {
     if(err) {
       console.error(err);
-      process.exit(1);
     }
     db.get(room, function(err, value) {
-      console.log(value);
 	  if (value) {
-        projects[room].project.importJSON(value);
+        projects[room].project.importJSON(value.project);
         socket.emit('project:load', value);
       }
       db.close(function(){});
@@ -170,8 +168,6 @@ function unsubscribe(socket, data) {
 // Ends a path
 var end_external_path = function (room, points, artist) {
 
-  //var paper = papers[room].paper;
-  //var path = papers[room].external_paths[artist];
   var project = projects[room].project;
   project.activate();
   var path = projects[room].external_paths[artist];
@@ -188,12 +184,11 @@ var end_external_path = function (room, points, artist) {
     projects[room].external_paths[artist] = false;
 
   }
-  
+
   var json = project.exportJSON();
   db.init(function (err) {
     if(err) {
       console.error(err);
-      process.exit(1);
     }
     db.set(room, {project: json});
   });
@@ -210,7 +205,6 @@ progress_external_path = function (room, points, artist) {
   // So start it
   if (!path) {
 
-    // Creates the path in an easy to access way
     projects[room].external_paths[artist] = new paper.Path();
     path = projects[room].external_paths[artist];
 
