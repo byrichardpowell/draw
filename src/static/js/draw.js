@@ -166,8 +166,26 @@ $opacity.on('change', function () {
 
 });
 
+$('#clearCanvas').on('click', function() {
+  clearCanvas();
+  socket.emit('canvas:clear', room);
+});
 
-
+function clearCanvas() {
+  /*if (paper.project.activeLayer.hasChildren()) {
+    paper.project.activeLayer.removeChildren();
+  }*/
+  for (x in paper.project.layers) {
+    var layer = paper.project.layers[x];
+	
+	if (layer._id > 1) {
+	 layer.remove();
+	}
+  }
+  //paper.project.remove();
+  //paper.project = new Project(paper.view);
+  //paper.project.view.draw();
+}
 
 
 

@@ -86,6 +86,12 @@ io.sockets.on('connection', function (socket) {
     subscribe(socket, data);
   });
   
+  // User clears canvas
+  socket.on('canvas:clear', function(room) {
+    clearCanvas(room);
+    io.sockets.in(room).emit('canvas:clear');
+  });
+  
 });
 
 var projects = {};
@@ -185,13 +191,14 @@ var end_external_path = function (room, points, artist) {
 
   }
 
-  var json = project.exportJSON();
+  writeProjectToDB(room);
+  /*var json = project.exportJSON();
   db.init(function (err) {
     if(err) {
       console.error(err);
     }
     db.set(room, {project: json});
-  });
+  });*/
 };
 
 // Continues to draw a path in real time
@@ -231,3 +238,24 @@ progress_external_path = function (room, points, artist) {
 
 };
 
+function writeProjectToDB(room) {
+  var project = projects[room].project;
+  var json = project.exportJSON();
+  db.init(function (err) {
+    if(err) {
+      console.error(err);
+    }
+    db.set(room, {project: json});
+  });
+}
+
+function clearCanvas(room) {
+  var project = projects[room].project;
+  
+  if (project && project.activeLayer.hasChildren()) {
+    //project.activeLayer.removeChildren();
+	project.remove();
+	project = new paper.Project(paper.view);
+    writeProjectToDB(room);
+  }
+}
