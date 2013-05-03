@@ -207,13 +207,6 @@ var end_external_path = function (room, points, artist) {
   }
 
   writeProjectToDB(room);
-  /*var json = project.exportJSON();
-  db.init(function (err) {
-    if(err) {
-      console.error(err);
-    }
-    db.set(room, {project: json});
-  });*/
 };
 
 // Continues to draw a path in real time
