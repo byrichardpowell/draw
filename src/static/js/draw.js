@@ -229,6 +229,9 @@ socket.on('project:load', function (json) {
   view.draw();
 });
 
+socket.on('project:load:error', function() {
+  $('#lostConnection').show();
+});
 
 
 
