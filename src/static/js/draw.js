@@ -172,19 +172,19 @@ $('#clearCanvas').on('click', function() {
 });
 
 function clearCanvas() {
-  /*if (paper.project.activeLayer.hasChildren()) {
-    paper.project.activeLayer.removeChildren();
-  }*/
-  for (x in paper.project.layers) {
-    var layer = paper.project.layers[x];
-	
-	if (layer._id > 1) {
-	 layer.remove();
+  // Remove all but the first layer
+  for (var i=0; i<paper.project.layers.length; i++) {
+    if (paper.project.layers[i]._id > 1) {
+      paper.project.layers[i].remove();
+      i--;
 	}
   }
-  //paper.project.remove();
-  //paper.project = new Project(paper.view);
-  //paper.project.view.draw();
+  
+  // Remove all of the children from the first (active) layer
+  if (paper.project.activeLayer && paper.project.activeLayer.hasChildren()) {
+    paper.project.activeLayer.removeChildren();
+  }
+  view.draw();
 }
 
 
@@ -233,6 +233,9 @@ socket.on('project:load:error', function() {
   $('#lostConnection').show();
 });
 
+socket.on('canvas:clear', function() {
+  clearCanvas();
+});
 
 
 // --------------------------------- 
