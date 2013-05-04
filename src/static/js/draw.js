@@ -79,6 +79,8 @@ if (authorColor != "" && authorColor.substr(0,4) == "rgb(") {
   } else {
     update_active_color();
   }
+} else {
+  update_active_color();
 }
 
 
