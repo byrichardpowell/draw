@@ -197,14 +197,14 @@ function clearCanvas() {
 function exportSVG() {
   //console.log(paper.project.exportSVG());
   var svg = paper.project.exportSVG();
-  encode_as_img_and_link(svg);
+  encodeAsImgAndLink(svg);
 }
 
 // Encodes svg as a base64 text and opens a new browser window
 // to the svg image that can be saved as a .svg on the users
 // local filesystem. This skips making a round trip to the server
 // for a POST.
-function encode_as_img_and_link(svg){
+function encodeAsImgAndLink(svg){
   // Add some critical information
   svg.setAttribute('version', '1.1');
   svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
