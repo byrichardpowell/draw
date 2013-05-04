@@ -41,7 +41,6 @@ var active_color_rgb;
 var active_color_json = {};
 var $opacity = $('#opacity');
 var update_active_color = function (r, g, b) {
-  console.log(r + ", " + g + ", " + b );
   var rgb_array = $('.active').attr('data-color').split(',');
   var red = rgb_array[0] / 255;
   if (r) {
