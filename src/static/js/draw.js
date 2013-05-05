@@ -183,7 +183,7 @@ function onMouseUp(event) {
 // --------------------------------- 
 // CONTROLS EVENTS
 
-var $color = $('.color');
+var $color = $('.colorBox');
 $color.on('click', function () {
 
   $color.removeClass('active');
