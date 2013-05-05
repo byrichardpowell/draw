@@ -183,7 +183,7 @@ function onMouseUp(event) {
 // --------------------------------- 
 // CONTROLS EVENTS
 
-var $color = $('.colorBox');
+var $color = $('.colorSwatch:not(#pickerSwatch)');
 $color.on('click', function () {
 
   $color.removeClass('active');
@@ -191,6 +191,10 @@ $color.on('click', function () {
 
   update_active_color();
 
+});
+
+$('#pickerSwatch').on('click', function() {
+  $('#myColorPicker').fadeToggle();
 });
 
 $opacity.on('change', function () {
