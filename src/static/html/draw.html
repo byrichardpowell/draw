@@ -3,14 +3,16 @@
     <head>
         <title>EtherDraw</title>
         <link rel='stylesheet' href='/static/css/style.css'>
+        <link rel='stylesheet' href='/static/css/farbtastic.css'>
         <script src='/socket.io/socket.io.js'></script>
-        <!--<script src='/static/js/lib/zepto.js'></script>-->
-        <script>
+        <!--<script>
             document.write('<script src=/static/js/lib/' +
             ('__proto__' in {} ? 'zepto' : 'jquery') + '.js><\/script>')
-        </script>
+        </script>-->
+		<script src='/static/js/lib/jquery.js'></script>
         <script src='/static/js/lib/paper.js'></script>
         <script src='/static/js/lib/webtoolkit.base64.js'></script>
+        <script src='/static/js/lib/farbtastic.js'></script>
         <script src='/static/js/draw.js' type="text/paperscript" canvas="myCanvas"></script>
     </head>
     <body>
@@ -39,6 +41,8 @@
         <button id="clearCanvas">Clear</button>
         <button id="exportSVG">Export SVG</button>
         <button id="exportPNG">Export PNG</button>
+        <form><input type="text" id="color" name="color" value="#123456" /></form>
+        <div id="colorpicker"></div>
     </div>
     <canvas id="myCanvas" resize="true"></canvas>
     </body>

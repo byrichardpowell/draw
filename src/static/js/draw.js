@@ -1,6 +1,9 @@
 tool.minDistance = 10;
 tool.maxDistance = 45;
 
+$(document).ready(function() {
+  $('#colorpicker').farbtastic('#color');
+});
 
 // Initialise Socket.io
 var socket = io.connect('/');
