@@ -18,6 +18,15 @@ font-size:10px;
 width:40px;
 }
 
+#activeColorSwatch{
+display:inline-block;
+width:37px;
+height:15px;
+border:2px solid #ccc;
+opacity:1;
+margin:0;
+}
+
 .colorSwatch{
 display:inline-block;
 width:15px;

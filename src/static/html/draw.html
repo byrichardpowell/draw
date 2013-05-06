@@ -5,10 +5,6 @@
         <link rel='stylesheet' href='/static/css/style.css'>
         <link rel='stylesheet' href='/static/css/farbtastic.css'>
         <script src='/socket.io/socket.io.js'></script>
-        <!--<script>
-            document.write('<script src=/static/js/lib/' +
-            ('__proto__' in {} ? 'zepto' : 'jquery') + '.js><\/script>')
-        </script>-->
 		<script src='/static/js/lib/jquery.js'></script>
         <script src='/static/js/lib/paper.js'></script>
         <script src='/static/js/lib/webtoolkit.base64.js'></script>
@@ -26,6 +22,7 @@
         <div id="userCountWrapper" style="opacity:0"> artists:
             <span id="userCount"></span>
         </div>
+        <div id="activeColorSwatch"></div>
         <div data-color="47,47,47" class="colorSwatch" style="background:rgb(37,37,37);"></div>
         <div data-color="109,73,37" class="colorSwatch active" style="background:rgb(109,73,37);"></div>
         <div data-color="233,34,41" class="colorSwatch" style="background:rgb(233,34,41);"></div>
