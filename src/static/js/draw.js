@@ -369,7 +369,7 @@ socket.on('loading:end', function() {
 socket.on('item:remove', function(artist, name) {
   if (artist != uid && paper.project.activeLayer._namedChildren[name][0]) {
     paper.project.activeLayer._namedChildren[name][0].remove();
-	view.draw();
+    view.draw();
   }
 });
 
