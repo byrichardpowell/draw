@@ -144,6 +144,9 @@ function loadFromDB(room, socket) {
       db.get(room, function(err, value) {
 	    if (value && projects[room].project && projects[room].project instanceof paper.Project) {
           socket.emit('loading:start');
+          // Clear default layer as importing JSON adds a new layer.
+          // We want the project to always only have one layer.
+          projects[room].project.activeLayer.remove();
           projects[room].project.importJSON(value.project);
           socket.emit('project:load', value);
         }

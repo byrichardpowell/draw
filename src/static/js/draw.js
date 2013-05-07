@@ -346,6 +346,7 @@ socket.on('user:disconnect', function (user_count) {
 });
 
 socket.on('project:load', function (json) {
+  paper.project.activeLayer.remove();
   paper.project.importJSON(json.project);
   view.draw();
 });
