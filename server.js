@@ -292,7 +292,7 @@ function clearCanvas(room) {
 
 function removeItem(room, artist, itemName) {
   var project = projects[room].project;
-  if (project && project.activeLayer && project.activeLayer._namedChildren[itemName][0]) {
+  if (project && project.activeLayer && project.activeLayer._namedChildren[itemName] && project.activeLayer._namedChildren[itemName][0]) {
     project.activeLayer._namedChildren[itemName][0].remove();
     io.sockets.in(room).emit('item:remove', artist, itemName);
     writeProjectToDB(room);
