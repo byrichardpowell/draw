@@ -131,7 +131,10 @@ function onMouseDown(event) {
   } else if (activeTool == "select") {
     // Select item
     if (event.item) {
-      paper.project.activeLayer.selected = false;
+      // If holding shift key down, don't clear selection - allows multiple selections
+      if (!event.event.shiftKey) {
+        paper.project.activeLayer.selected = false;
+      }
       event.item.selected = true;
       view.draw();
     }
