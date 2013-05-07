@@ -104,12 +104,19 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in(room).emit('canvas:clear');
   });
   
+  // User removes an item
   socket.on('item:remove', function(room, uid, itemName) {
     removeItem(room, uid, itemName);
   });
   
-  socket.on('item:move', function(room, uid, itemNames, delta) {
-    moveItems(room, uid, itemNames, delta);
+  // User moves one or more items on their canvas - progress
+  socket.on('item:move:progress', function(room, uid, itemNames, delta) {
+    moveItemsProgress(room, uid, itemNames, delta);
+  });
+  
+  // User moves one or more items on their canvas - end
+  socket.on('item:move:end', function(room, uid, itemNames, delta) {
+    moveItemsEnd(room, uid, itemNames, delta);
   });
   
 });
@@ -308,7 +315,35 @@ function removeItem(room, artist, itemName) {
 }
 
 // Move one or more existing items on the canvas
-function moveItems(room, artist, itemNames, delta) {
+function moveItemsProgress(room, artist, itemNames, delta) {
   var project = projects[room].project;
+  if (project && project.activeLayer) {
+    for (x in itemNames) {
+      var itemName = itemNames[x];
+      if (project.activeLayer._namedChildren[itemName][0]) {
+        project.activeLayer._namedChildren[itemName][0].position.x += delta[1];
+        project.activeLayer._namedChildren[itemName][0].position.y += delta[2];
+      }
+    }
+    io.sockets.in(room).emit('item:move', artist, itemNames, delta);
+  }
+}
 
+// Move one or more existing items on the canvas
+// and write to DB
+function moveItemsEnd(room, artist, itemNames, delta) {
+  var project = projects[room].project;
+  if (project && project.activeLayer) {
+    for (x in itemNames) {
+      var itemName = itemNames[x];
+      if (project.activeLayer._namedChildren[itemName][0]) {
+        project.activeLayer._namedChildren[itemName][0].position.x += delta[1];
+        project.activeLayer._namedChildren[itemName][0].position.y += delta[2];
+      }
+    }
+    if (itemNames) {
+      io.sockets.in(room).emit('item:move', artist, itemNames, delta);
+    }
+    writeProjectToDB(room);
+  }
 }
