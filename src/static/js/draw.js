@@ -107,6 +107,7 @@ update_active_color();
 
 var send_paths_timer;
 var timer_is_active = false;
+var paper_object_count = 0;
 
 function onMouseDown(event) {
 
@@ -115,10 +116,12 @@ function onMouseDown(event) {
   path = new Path();
   path.fillColor = active_color_rgb;
   path.add(event.point);
+  path.name = uid + ":" + (++paper_object_count);
   view.draw();
 
   // The data we will send every 100ms on mouse drag
   path_to_send = {
+    name: path.name,
     rgba: active_color_json,
     start: event.point,
     path: []
@@ -246,7 +249,6 @@ function clearCanvas() {
 }
 
 function exportSVG() {
-  //console.log(paper.project.exportSVG());
   var svg = paper.project.exportSVG();
   encodeAsImgAndLink(svg);
 }
@@ -385,6 +387,7 @@ progress_external_path = function (points, artist) {
     var start_point = new Point(points.start[1], points.start[2]);
     var color = new RgbColor(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
     path.fillColor = color;
+    path.name = points.name;
     path.add(start_point);
 
   }

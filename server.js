@@ -233,6 +233,7 @@ progress_external_path = function (room, points, artist) {
     var start_point = new paper.Point(points.start[1], points.start[2]);
     var color = new paper.Color(points.rgba.red, points.rgba.green, points.rgba.blue, points.rgba.opacity);
     path.fillColor = color;
+    path.name = points.name;
     path.add(start_point);
 
   }
