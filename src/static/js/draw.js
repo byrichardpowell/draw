@@ -440,7 +440,7 @@ socket.on('item:move', function(artist, itemNames, delta) {
         paper.project.activeLayer._namedChildren[itemName][0].position += new Point(delta[1], delta[2]);
       }
     }
-	view.draw();
+    view.draw();
   }
 });
 
