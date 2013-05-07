@@ -202,6 +202,17 @@ function onMouseUp(event) {
 
 }
 
+//TODO add array of movements or just overall delta? just overall delta
+//set timer with interval of like 50 ms send movement updates
+function onMouseDrag(event) {
+  if (activeTool == "select") {
+    for (x in paper.project.selectedItems) {
+      var item = paper.project.selectedItems[x];
+      item.position += event.delta;
+    }
+  }
+}
+
 function onKeyUp(event) {
   if (event.key == "delete") {
     var items = paper.project.selectedItems;

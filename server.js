@@ -104,8 +104,12 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in(room).emit('canvas:clear');
   });
   
-  socket.on('item:remove', function(room, artist, itemName) {
-    removeItem(room, artist, itemName);
+  socket.on('item:remove', function(room, uid, itemName) {
+    removeItem(room, uid, itemName);
+  });
+  
+  socket.on('item:move', function(room, uid, itemNames, delta) {
+    moveItems(room, uid, itemNames, delta);
   });
   
 });
@@ -293,6 +297,7 @@ function clearCanvas(room) {
   }
 }
 
+// Remove an item from the canvas
 function removeItem(room, artist, itemName) {
   var project = projects[room].project;
   if (project && project.activeLayer && project.activeLayer._namedChildren[itemName] && project.activeLayer._namedChildren[itemName][0]) {
@@ -300,4 +305,10 @@ function removeItem(room, artist, itemName) {
     io.sockets.in(room).emit('item:remove', artist, itemName);
     writeProjectToDB(room);
   }
+}
+
+// Move one or more existing items on the canvas
+function moveItems(room, artist, itemNames, delta) {
+  var project = projects[room].project;
+
 }
