@@ -104,6 +104,10 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in(room).emit('canvas:clear');
   });
   
+  socket.on('item:remove', function(room, artist, itemName) {
+    removeItem(room, artist, itemName);
+  });
+  
 });
 
 var projects = {};
@@ -282,6 +286,15 @@ function clearCanvas(room) {
     if (paper.project.activeLayer && paper.project.activeLayer.hasChildren()) {
       paper.project.activeLayer.removeChildren();
     }
+    writeProjectToDB(room);
+  }
+}
+
+function removeItem(room, artist, itemName) {
+  var project = projects[room].project;
+  if (project && project.activeLayer && project.activeLayer._namedChildren[itemName][0]) {
+    project.activeLayer._namedChildren[itemName][0].remove();
+    io.sockets.in(room).emit('item:remove', artist, itemName);
     writeProjectToDB(room);
   }
 }
