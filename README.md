@@ -1,13 +1,13 @@
 EtherDraw
 =========
 
-A collaborative drawing / sketching / painting web based tool.
+An intuitive collaborative drawing / sketching / painting web based tool.
 
 Fast, light weight, easy to maintain.  Try the [demo] (http://draw.etherpad.org).
 
 Demo
 ----
-[draw.etherpad.org](http://draw.etherpad.org)
+[Etherdraw Demo site](http://draw.etherpad.org)
 
 Installation
 ------------
@@ -31,7 +31,7 @@ Thanks to..
 
 License
 -------
-See http://etherpad.org - Apache 2 License
+Apache 2 License
 
 Donations
 ---------
