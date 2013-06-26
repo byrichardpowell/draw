@@ -35,4 +35,4 @@ Apache 2 License
 
 Donations
 ---------
-Donate through [Etherpad] (http://etherpad.org)
+Donate to the [Etherpad Foundation] (http://etherpad.org/#links)
