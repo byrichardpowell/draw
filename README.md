@@ -1,4 +1,4 @@
-[screen shot](http://blog.etherpad.org/files/2013/06/etherdraw.png)
+![alt text](http://blog.etherpad.org/files/2013/06/etherdraw.png "Screen shot")
 
 An intuitive collaborative drawing / sketching / painting web based tool.
 
